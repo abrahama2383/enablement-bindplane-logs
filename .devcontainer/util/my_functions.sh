@@ -14,7 +14,7 @@ customFunction(){
 }
 
 startLogGenerator(){
-nohup python3 .devcontainer/util/generate_logs.py --logdir ./logs --quiet > /dev/null 2>&1 &
+nohup python3 .devcontainer/util/generate_logs.py --logdir /var/log/bpsystem --quiet > /dev/null 2>&1 &
 echo $! > ./generator.pid  # save the PID so you can kill it later
 }
 

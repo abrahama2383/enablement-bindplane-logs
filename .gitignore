@@ -217,3 +217,5 @@ Dockerfile.framework
 
 
 docs/stylesheets/extra.css
+
+generator.pid
