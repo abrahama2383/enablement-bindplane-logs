@@ -14,12 +14,28 @@ customFunction(){
 }
 
 startLogGenerator(){
-nohup python3 .devcontainer/util/generate_logs.py --logdir /var/log/bpsystem --quiet > /dev/null 2>&1 &
+local logdir="${1:-/var/log/bpsystem}"
+
+# Ensure the target directory exists and is writable by the current user.
+if [ ! -d "$logdir" ]; then
+  sudo mkdir -p "$logdir"
+fi
+if [ ! -w "$logdir" ]; then
+  sudo chown -R "$USER":"$USER" "$logdir"
+fi
+
+nohup python3 .devcontainer/util/generate_logs.py --logdir "$logdir" --quiet > /dev/null 2>&1 &
 echo $! > ./generator.pid  # save the PID so you can kill it later
 }
 
 stopLogGenerator(){
-sudo kill $(cat ./generator.pid)
+if [ -f ./generator.pid ]; then
+  local pid
+  pid="$(cat ./generator.pid)"
+  if [ -n "$pid" ] && ps -p "$pid" > /dev/null 2>&1; then
+    kill "$pid"
+  fi
+fi
 }
 
 startBindplane(){

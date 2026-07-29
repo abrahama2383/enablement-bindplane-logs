@@ -1,0 +1,1 @@
+sudo sh -c "$(curl -fsSlL 'https://bdot.bindplane.com/v1.105.0/install_unix.sh')" install_unix.sh -e 'wss://app.bindplane.com/v1/opamp' -s '01KQJ6VKT36W2GDFDF6SFK6ZT1' -v '1.105.0' -k 'fleet=bplab'

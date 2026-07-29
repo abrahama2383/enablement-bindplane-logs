@@ -33,6 +33,14 @@ installK9s
 # If you want to deploy your own App, just create a function in the functions.sh file and call it here.
 # deployMyCustomApp
 
+sudo mkdir -p /var/log/bpsystem
+sudo chown -R "$USER":"$USER" /var/log/bpsystem
+
+if ! declare -F startLogGenerator > /dev/null; then
+	printError "startLogGenerator is not defined. Ensure .devcontainer/util/my_functions.sh is sourced via source_framework.sh."
+	exit 1
+fi
+
 startLogGenerator
 
 # If the Codespace was created via Workflow end2end test will be done, otherwise
