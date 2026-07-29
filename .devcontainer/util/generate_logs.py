@@ -293,6 +293,47 @@ def seq_network():
         daemon_line(SEV_INFO, "NetworkManager", pid, "device (eth0): Activation: successful, device activated."),
     ]
 
+def rand_token(prefix="", length=32):
+    """Generate a realistic-looking random token."""
+    chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    return prefix + "".join(random.choices(chars, k=length))
+
+def rand_aws_key():
+    return "AKIA" + "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", k=16))
+
+def rand_email():
+    names  = ["alice", "bob", "deploy", "ci", "admin", "noreply", "support"]
+    domains = ["corp.internal", "example.com", "acme.org"]
+    return f"{random.choice(names)}@{random.choice(domains)}"
+
+# Normal auditd execve lines — benign commands captured by audit rules.
+# These establish the baseline so the credential leak doesn't stand out structurally.
+BENIGN_AUDIT_CMDS = [
+    lambda: (f"type=EXECVE msg=audit({_atime()}): argc=2 a0=\"/usr/bin/ls\" a1=\"-la\""),
+    lambda: (f"type=EXECVE msg=audit({_atime()}): argc=3 a0=\"/usr/bin/git\" a1=\"status\" a2=\"--short\""),
+    lambda: (f"type=EXECVE msg=audit({_atime()}): argc=2 a0=\"/usr/bin/systemctl\" a1=\"status\""),
+    lambda: (f"type=EXECVE msg=audit({_atime()}): argc=3 a0=\"/usr/bin/apt\" a1=\"-q\" a2=\"update\""),
+    lambda: (f"type=EXECVE msg=audit({_atime()}): argc=2 a0=\"/usr/bin/python3\" a1=\"/opt/monitor.py\""),
+    lambda: (f"type=SYSCALL msg=audit({_atime()}): arch=c000003e syscall=59 success=yes exit=0 "
+             f"a0=7f a1=7f a2=7f a3=7f items=2 ppid={epid()} pid={epid()} "
+             f"auid=1000 uid=1000 gid=1000 euid=1000 comm=\"bash\" exe=\"/bin/bash\""),
+    lambda: (f"type=USER_AUTH msg=audit({_atime()}): pid={epid()} uid=1000 auid=1000 "
+             f"msg='op=PAM:authentication acct=\"{random.choice(TRUSTED_USERS)}\" exe=\"/usr/bin/sudo\" "
+             f"hostname={HOSTNAME} addr={rand_internal()} terminal=pts/{random.randint(0,3)} res=success'"),
+]
+
+def _atime():
+    """Audit timestamp format: epoch.serial"""
+    return f"{int(datetime.now().timestamp())}.{random.randint(0,999):03d}"
+
+def seq_auditd_benign():
+    """A normal auditd execve record — establishes baseline."""
+    cmd_fn = random.choice(BENIGN_AUDIT_CMDS)
+    pid    = epid()
+    return [
+        kern_line(SEV_INFO, cmd_fn()),
+    ]
+
 # Weighted background noise pool
 NORMAL_POOL = []
 for fn, weight in [
@@ -305,6 +346,7 @@ for fn, weight in [
     (seq_ufw_block,      8),
     (seq_docker,         4),
     (seq_network,        3),
+    (seq_auditd_benign,  6),   # auditd noise — makes credential leak blend in
     (seq_oom,            1),
     (seq_disk_warning,   1),
 ]:
@@ -414,13 +456,137 @@ def scenario_recon():
     lines += [auth_line(SEV_NOTICE, "fail2ban", spid("fail2ban"), f"[sshd] Ban {ip}")]
     return lines
 
+def _auditd_preamble(user):
+    """A few benign auditd lines before a credential leak — establishes format, aids camouflage."""
+    lines = []
+    lines += seq_ssh_success(user=user, ip=rand_internal())
+    for _ in range(random.randint(3, 5)):
+        lines += seq_auditd_benign()
+    return lines
+
+def scenario_leak_bearer_token():
+    """API bearer token leaks via auditd execve — Authorization header captured verbatim.
+    Masking strategy: value prefix regex  →  Bearer [A-Za-z0-9\\-_.]{20,}
+    Detection: HIGH — consistent 'Bearer ' prefix makes this reliable.
+    Watch: kern.log, syslog
+    """
+    user      = random.choice(TRUSTED_USERS)
+    pid       = epid()
+    ppid      = epid()
+    atime     = _atime()
+    api_token = rand_token(prefix="sk-live-")
+    api_host  = random.choice(["api.stripe.com", "api.sendgrid.com", "hooks.slack.com",
+                               "api.github.com", "api.pagerduty.com"])
+    lines = _auditd_preamble(user)
+    lines += [
+        kern_line(SEV_INFO,
+            f"type=EXECVE msg=audit({atime}): argc=5 "
+            f"a0=\"/usr/bin/curl\" a1=\"-s\" a2=\"-H\" "
+            f"a3=\"Authorization: Bearer {api_token}\" "
+            f"a4=\"https://{api_host}/v1/messages\""),
+        kern_line(SEV_INFO,
+            f"type=SYSCALL msg=audit({atime}): arch=c000003e syscall=59 success=yes exit=0 "
+            f"a0=55a3b2 a1=55a3c4 a2=55a3d8 a3=0 items=2 ppid={ppid} pid={pid} "
+            f"auid=1000 uid=1000 gid=1000 euid=1000 suid=1000 fsuid=1000 "
+            f"egid=1000 sgid=1000 fsgid=1000 tty=pts0 ses=12 "
+            f"comm=\"curl\" exe=\"/usr/bin/curl\" key=\"execve_track\""),
+    ]
+    lines += seq_ssh_disconnect(user=user)
+    return lines
+
+def scenario_leak_aws_key():
+    """AWS access key + secret leak via auditd — passed as env vars to a deploy script.
+    Two secrets, two masking strategies:
+      Key ID:     value format regex  →  AKIA[A-Z0-9]{16}          (HIGH reliability)
+      Secret key: key-name prefix     →  AWS_SECRET_ACCESS_KEY=\\S+ (MEDIUM reliability)
+    Watch: kern.log, syslog
+    """
+    user       = random.choice(TRUSTED_USERS)
+    aws_key    = rand_aws_key()
+    aws_secret = rand_token(length=40)
+    lines = _auditd_preamble(user)
+    lines += [
+        kern_line(SEV_INFO,
+            f"type=EXECVE msg=audit({_atime()}): argc=3 "
+            f"a0=\"/bin/bash\" "
+            f"a1=\"/opt/deploy.sh\" "
+            f"a2=\"AWS_ACCESS_KEY_ID={aws_key} AWS_SECRET_ACCESS_KEY={aws_secret}\""),
+        kern_line(SEV_INFO,
+            f"type=SYSCALL msg=audit({_atime()}): arch=c000003e syscall=59 success=yes exit=0 "
+            f"items=2 ppid={epid()} pid={epid()} auid=1000 uid=1000 gid=1000 euid=1000 "
+            f"comm=\"bash\" exe=\"/bin/bash\" key=\"execve_track\""),
+    ]
+    lines += seq_ssh_disconnect(user=user)
+    return lines
+
+def scenario_leak_db_password():
+    """Database password leaks via auditd — passed as positional CLI arg to psql.
+    Masking strategy: positional/contextual only — no reliable value pattern.
+      Must detect: psql command + argument after -W flag.
+    Detection: LOW — password is a plain string; only detectable by context.
+    This scenario illustrates why some leaks require fixing the root cause,
+    not just masking — passwords should not be passed as CLI arguments.
+    Watch: kern.log, syslog
+    """
+    user    = random.choice(TRUSTED_USERS)
+    db_pass = rand_token(length=16)
+    db_user = random.choice(["app_user", "deploy", "readonly", "admin"])
+    db_host = rand_internal()
+    lines = _auditd_preamble(user)
+    lines += [
+        kern_line(SEV_INFO,
+            f"type=EXECVE msg=audit({_atime()}): argc=8 "
+            f"a0=\"/usr/bin/psql\" "
+            f"a1=\"-h\" a2=\"{db_host}\" "
+            f"a3=\"-U\" a4=\"{db_user}\" "
+            f"a5=\"-W\" a6=\"{db_pass}\" "
+            f"a7=\"appdb\""),
+        kern_line(SEV_INFO,
+            f"type=SYSCALL msg=audit({_atime()}): arch=c000003e syscall=59 success=yes exit=0 "
+            f"items=2 ppid={epid()} pid={epid()} auid=1000 uid=1000 gid=1000 euid=1000 "
+            f"comm=\"psql\" exe=\"/usr/bin/psql\" key=\"execve_track\""),
+    ]
+    lines += seq_ssh_disconnect(user=user)
+    return lines
+
+def scenario_leak_email_address():
+    """Email addresses leak via postfix relay logs written to syslog.
+    Masking strategy: standard email regex  →  [a-zA-Z0-9._%+\\-]+@[a-zA-Z0-9.\\-]+\\.[a-zA-Z]{2,}
+    Detection: HIGH — email format is well-defined and reliably detectable.
+    Note: unlike the auditd scenarios this comes via the daemon facility, not kern.
+    Watch: syslog
+    """
+    user  = random.choice(TRUSTED_USERS)
+    lines = []
+    lines += seq_ssh_success(user=user, ip=rand_internal())
+    # A cluster of email relay entries — realistic mail server activity
+    for _ in range(random.randint(3, 8)):
+        email  = rand_email()
+        domain = random.choice(["corp.internal", "example.com"])
+        lines += [daemon_line(SEV_INFO, "postfix/smtp", epid(),
+            f"to=<{email}>, relay=mail.{domain}[{rand_internal()}]:25, "
+            f"delay={random.uniform(0.3,2.5):.1f}, delays=0.1/0/0.4/0.3, "
+            f"dsn=2.0.0, status=sent (250 2.0.0 OK)")]
+    # Occasional bounce — adds realism
+    if random.random() < 0.3:
+        lines += [daemon_line(SEV_WARNING, "postfix/smtp", epid(),
+            f"to=<{rand_email()}>, relay=mail.example.com[{rand_internal()}]:25, "
+            f"status=bounced (550 5.1.1 user unknown)")]
+    lines += seq_ssh_disconnect(user=user)
+    return lines
+
 SCENARIOS = {
-    "brute_force":          (scenario_brute_force,         "SSH brute force from bad IP → fail2ban ban",          "auth.log, syslog"),
-    "privilege_escalation": (scenario_privilege_escalation,"Suspicious sudo chain post-login",                    "auth.log, syslog"),
-    "data_exfil":           (scenario_data_exfil,          "curl exfil of /etc/passwd to bad IP",                 "kern.log, auth.log, syslog"),
-    "service_cascade":      (scenario_service_cascade,     "PostgreSQL crash cascades to nginx, redis, OOM",      "syslog, kern.log"),
-    "crypto_miner":         (scenario_crypto_miner,        "xmrig detected in /tmp with outbound connections",    "kern.log, auth.log, syslog"),
-    "recon":                (scenario_recon,               "Port scan from bad IP triggering UFW blocks",         "kern.log, syslog"),
+    "brute_force":          (scenario_brute_force,          "SSH brute force from bad IP → fail2ban ban",           "auth.log, syslog"),
+    "privilege_escalation": (scenario_privilege_escalation, "Suspicious sudo chain post-login",                     "auth.log, syslog"),
+    "data_exfil":           (scenario_data_exfil,           "curl exfil of /etc/passwd to bad IP",                  "kern.log, auth.log, syslog"),
+    "service_cascade":      (scenario_service_cascade,      "PostgreSQL crash cascades to nginx, redis, OOM",       "syslog, kern.log"),
+    "crypto_miner":         (scenario_crypto_miner,         "xmrig detected in /tmp with outbound connections",     "kern.log, auth.log, syslog"),
+    "recon":                (scenario_recon,                "Port scan from bad IP triggering UFW blocks",          "kern.log, syslog"),
+    # --- Data masking scenarios (each teaches a distinct detection strategy) ---
+    "leak_bearer_token":    (scenario_leak_bearer_token,    "API bearer token in curl header — mask by value prefix",   "kern.log, syslog"),
+    "leak_aws_key":         (scenario_leak_aws_key,         "AWS key+secret in env args — mask by format + key name",   "kern.log, syslog"),
+    "leak_db_password":     (scenario_leak_db_password,     "DB password as CLI arg — context-only, low maskability",   "kern.log, syslog"),
+    "leak_email":           (scenario_leak_email_address,   "Email addresses in postfix relay logs — mask by format",   "syslog"),
 }
 
 # ---------------------------------------------------------------------------
@@ -490,9 +656,12 @@ def main():
     parser.add_argument("--interval", type=float, default=1.0,
                         help="Base seconds between sequences (default: 1.0)")
     parser.add_argument("--scenario", type=str, default=None,
-                        help="Needle to inject: " + ", ".join(list(SCENARIOS.keys()) + ["all"]))
+                        help="Scenario(s) to inject: single name, comma-separated list, or 'all'. "
+                             "E.g. --scenario brute_force,credential_leak")
     parser.add_argument("--scenario-after", type=int, default=None,
-                        help="Inject scenario after N lines of noise (default: random)")
+                        help="Inject first scenario after N lines of noise (default: random 20-50)")
+    parser.add_argument("--scenario-repeat", type=int, default=None,
+                        help="Re-inject scenario(s) every ~N lines (+/-50%%). E.g. --scenario-repeat 50")
     parser.add_argument("--list-scenarios", action="store_true",
                         help="List available scenarios and exit")
     parser.add_argument("--quiet", action="store_true",
@@ -505,7 +674,8 @@ def main():
         print(f"  {'-'*24} {'-'*24} {'-'*40}")
         for name, (_, desc, files) in SCENARIOS.items():
             print(f"  {name:<25} {files:<25} {desc}")
-        print(f"\n  {'all':<25} {'all files':<25} Inject all scenarios in random order\n")
+        print(f"\n  {'all':<25} {'all files':<25} Inject all scenarios in random order")
+        print(f"\n  Comma-separate to pick a subset: --scenario brute_force,credential_leak\n")
         sys.exit(0)
 
     os.makedirs(args.logdir, exist_ok=True)
@@ -515,47 +685,61 @@ def main():
     signal.signal(signal.SIGINT, handle_exit)
     signal.signal(signal.SIGTERM, handle_exit)
 
-    inject_at = args.scenario_after
-    if args.scenario and inject_at is None:
-        if args.count:
-            inject_at = random.randint(max(20, args.count // 5), max(30, args.count // 2))
-        else:
-            inject_at = random.randint(50, 200)
-
+    # Parse scenario list
     inject_queue = []
-    if args.scenario == "all":
-        names = list(SCENARIOS.keys())
-        random.shuffle(names)
+    if args.scenario:
+        if args.scenario == "all":
+            names = list(SCENARIOS.keys())
+            random.shuffle(names)
+        else:
+            names = [s.strip() for s in args.scenario.split(",")]
+            unknown = [n for n in names if n not in SCENARIOS]
+            if unknown:
+                print(f"Unknown scenario(s): {', '.join(unknown)}. Use --list-scenarios.")
+                sys.exit(1)
         inject_queue = [SCENARIOS[n][0] for n in names]
-    elif args.scenario:
-        if args.scenario not in SCENARIOS:
-            print(f"Unknown scenario '{args.scenario}'. Use --list-scenarios.")
-            sys.exit(1)
-        inject_queue = [SCENARIOS[args.scenario][0]]
+
+    inject_at = args.scenario_after
+    if inject_queue and inject_at is None:
+        inject_at = random.randint(20, 50)
 
     print(f"Generating logs (base interval: {args.interval}s) "
           f"{'(unlimited)' if args.count is None else f'(~{args.count} lines)'}...")
-    if inject_queue and args.scenario != "all":
-        _, _, files = SCENARIOS[args.scenario]
-        print(f"Scenario '{args.scenario}' injects after ~{inject_at} lines. Watch: {files}")
+    if inject_queue:
+        injecting = args.scenario if args.scenario == "all" else ", ".join(
+            [s.strip() for s in args.scenario.split(",")])
+        print(f"Scenarios to inject: {injecting}")
+        if args.scenario_repeat:
+            print(f"First injection after ~{inject_at} lines, repeating every ~{args.scenario_repeat} lines (+/-50%).")
+        else:
+            print(f"Injecting once after ~{inject_at} lines of noise.")
     print("Ctrl+C to stop.\n")
 
+    # Resolve scenario functions — cycle through them in order when repeating
+    scenario_fns = [SCENARIOS[n][0] for n in names] if inject_queue else []
     total_lines  = 0
-    all_injected = False
+    cycle_index  = 0
+
+    def next_inject_at(current_lines):
+        if args.scenario_repeat:
+            spread = max(1, args.scenario_repeat // 2)
+            return current_lines + random.randint(
+                max(1, args.scenario_repeat - spread),
+                args.scenario_repeat + spread)
+        return None  # no repeat — fire once only
 
     while args.count is None or total_lines < args.count:
 
-        if inject_queue and not all_injected and total_lines >= inject_at:
-            fn = inject_queue.pop(0)
+        # Time to inject a scenario?
+        if scenario_fns and inject_at is not None and total_lines >= inject_at:
+            fn = scenario_fns[cycle_index % len(scenario_fns)]
+            cycle_index += 1
             needle = fn()
             if not args.quiet:
                 print(f"\n{'='*60}\n>>> INJECTING: {fn.__name__}\n{'='*60}\n")
             total_lines += emit_sequence(needle, args.logdir, args.quiet,
                                          interval=args.interval * 0.1)
-            if not inject_queue:
-                all_injected = True
-            else:
-                inject_at = total_lines + random.randint(30, 100)
+            inject_at = next_inject_at(total_lines)
             continue
 
         seq   = random.choice(NORMAL_POOL)

@@ -24,7 +24,13 @@ if [ ! -w "$logdir" ]; then
   sudo chown -R "$USER":"$USER" "$logdir"
 fi
 
-nohup python3 .devcontainer/util/generate_logs.py --logdir "$logdir" --quiet > /dev/null 2>&1 &
+nohup python3 .devcontainer/util/generate_logs.py \
+  --logdir "$logdir" \
+  --scenario leak_aws_key \
+  --scenario-after 20 \
+  --scenario-repeat 50 \
+  --interval 0.5 \
+  --quiet > /dev/null 2>&1 &
 echo $! > ./generator.pid  # save the PID so you can kill it later
 }
 
