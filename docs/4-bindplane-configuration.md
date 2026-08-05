@@ -65,6 +65,8 @@ Now let's check to see that data is flowing in our pipeline
 1. Click "Overview" in the top navigation bar.  You should be defaulted to the "Visualize" sub-tab.
 2. See the visualization of your pipeline on the right.  You should see that your pipeline is shipping data to Dynatrace by viewing the MB/h.  Great job!
 
+Once you're done, navigate back to your configuration.
+
 ![alt text](img/4-bindplane-configuration/8-overview-flow.png)
 
 ### 9. View Logs in Dynatrace
