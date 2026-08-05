@@ -1,36 +1,72 @@
---8<-- "snippets/grail-requirements.md"
 
-## 1. Prerequisites before launching the Codespace
+## 1. Bindplane
 
-TODO: Place the prerequisites and everything that is needed before launching the codespace. 
+Begin by creating a [Bindplane](https://bindplane.com/) account, then create a project to work in.
 
-As a Professor we highly recommend to install VSCode locally and always open the devcontainer from it, specially since we'll be using some plugins for enhancing the productivity and your experience while building trainings. 
+## 2. Dynatrace
+
+In your Dynatrace tenant, [create a platform token](https://docs.dynatrace.com/docs/manage/identity-access-management/access-tokens-and-oauth-clients/platform-tokens) that has the following permissions:
+
+- `logs.ingest`
+- `metrics.ingest`
+
+Save the token for now; you won't be able to see it again once you leave the token creation dialog.
+
+## 3. Development Environment
+The lab work will be done inside a [Dev Container](https://containers.dev/) - a fully configured development environment that is bootstrapped with all of the dependencies required for the lab.
+
+You have two options to work with the Dev Container:
+
+### A. GitHub Codespace
+This is the lowest-friction way to get up and running.  You can simply launch a browser-based session of VSCode without having to install anything locally
+
+!!! warning "Codespaces Quota"
+    GitHub Codespaces are a billed resource, however GitHub provides a free monthly quota.  If you would rather not incur any charges against your quota for this lab, use option #2
+
+1. Visit this repository's page in GitHub
+2. Expand the "<> Code" menu
+3. Click "Create codespace on main"
+![Codespace Dialog](img/2-getting-started/codespace_dialog.png){: style="width: 400px;"}
+
+### B. Local Dev Container
+Working with a local Dev Container involves an integration with your IDE. Visual Studio Code (VSCode) is well-suited for this
+This overall process is described in the [Visual Studio Code documentation](https://code.visualstudio.com/docs/devcontainers/containers).
+
+In summary:
+
+1. Install Docker.
+2. Install VSCode.
+3. Install the official Dev Containers extension.
+![Dev Containers Extension](img/2-getting-started/vscode_extension.png)
+4. Clone this repo and open it up in VSCode
+5. Use the VSCode [Command Palette](https://code.visualstudio.com/docs/editing/userinterface#_command-palette) to Select "Dev Containers: Reopen in Container"
+![Reopen in Container](img/2-getting-started/reopen_in_container.png)
 
 
-### 1.1 Download Visual Studio Code
+## Validate the Environment
+We'll be doing all of our work inside this Dev Container.  Take a look at the terminal tab at the bottom of of your VSCode window.  You should see some messages confirming that the environment has started up correctly.
+![Container Startup](img/2-getting-started/container_startup.png)
 
-- Go to  [https://code.visualstudio.com](https://code.visualstudio.com), download and install Visual Studio on your machine. 
+Press any key or open a new terminal window to continue.
 
+This host writes its logs to files in `/var/log/bpsystem`.  Navigate to that directory and view the contents
 
-!!! tip "Tipp"
-    Working on a local Visual Studio Code, maximizes your productivity, you'll be able to connect to dev.containers remotely, locally, install plugins, and much more.
+```
+> cd /var/log/bpsystem
+> ls
+auth.log  cron.log  kern.log  syslog
+```
 
+Let's take a look at the logs being written to syslog by tailing the syslog file
+```
+> tail -f syslog
+```
+![Syslog](img/2-getting-started/syslog.gif)
 
-### 1.2 Install the TODO Tree VS Code extension. 
+Your logs may look slightly different based on some environmental factors like hostname or docker implementation.
 
-We'll be guiding you with TODOs to write your first hands-on trainig.
-- Click on the extensions tab
-- Search for "Todo tree"
-- Click on it and install it
-
-![todo](img/todo.png){: style="width: 400px;"}
-
-Once installed, you'll see on the left menu bar, the Tree icon. When you click on it, a pane with TODO task will open, this tasks will guide you to write your training, remove each of them and the code or text that needs to be replace once completed. Like this page 😉. 
-
-!!! tip "Let's launch the Codespace"
-    Now we are ready to launch the Codespace! 
-
+Great!  With that, your environment is set up and ready to go!
 
 <div class="grid cards" markdown>
-- [Let's launch Codespaces:octicons-arrow-right-24:](3-codespaces.md)
+- [Let's install our Bindplane Agent:octicons-arrow-right-24:](3-bindplane-agent.md)
 </div>

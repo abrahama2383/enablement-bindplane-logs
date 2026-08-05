@@ -12,14 +12,19 @@
 
 ___
 
-This is a template so you as a professor can create fun and interesting enablements in no time.
+## Log Pipelines with Bindplane
 
-In this README you should add a brief description of the project. What will the student learn, which technologies and/or solutions. 
+In this lab, you'll learn how to install and configure BindPlane to ... TK
 
-<p align="center">
-<img src="docs/img/dt_professors.png" alt="Alt text" width="400"/>
-</p>
-
-Ready to learn how to create an enablement using codespaces? 
-## [👨‍🏫 Learn how to create enablements in Codespaces!](https://dynatrace-wwse.github.io/enablement-codespaces-template)
-
+### Prerequisites
+    - A BindPlane account and project
+    - A Dynatrace tenant
+    - A Dynatrace token with the following permissions:
+        - `logs.ingest`
+        - `metrics.ingest`
+    - one of:
+        - For working entirely in a browser: access to GitHub Codespaces
+        - For working locally in a [Dev Container](https://code.visualstudio.com/docs/devcontainers/tutorial):
+            - VSCode
+            - Dev Containers Extension installed
+            - Docker

@@ -11,7 +11,7 @@ installK9s
 
 #TODO: BeforeGoLive: uncomment this. This is only needed for professors to have the Mkdocs live in the container
 
-#installMkdocs
+installMkdocs
 
 
 # Dynatrace Operator can be deployed automatically

@@ -1,25 +1,22 @@
 
---8<-- "snippets/disclaimer.md"
 
-## How to to use this template?
-This is a template which will guide you on creating your own Hands-On training. 
-Within this tutorial you'll learn the basics how the codespaces work and how the documentation works, so you can build your own Hands-On training in no time.
+## About
 
-- Prerequisites 
-- Setting up the professors environment
-- Writing the documentation
-- How MkDocs work
-- How to write your own functions
-- Create Github documentation and publish it
-- Tipp & tricks
-- Troubleshooting
+_ text about what the lab is... _
 
-<p align="center">
-  <img src="img/dt_professors.png" alt="Professors" width="200">
-</p>
-
-!!! tip "What will we do"
-    In this tutorial we will learn how easy it is to create an enablement using codespaces and a Kubernetes cluster!
+## Prerequisites
+- BindPlane account and project
+- Dynatrace tenant
+- Dynatrace token with the following permissions:
+    - `logs.ingest`
+    - `metrics.ingest`
+- One of:
+    - For working entirely in a browser: access to GitHub Codespaces
+    - For working locally in a [Dev Container](https://code.visualstudio.com/docs/devcontainers/tutorial):
+        - VSCode
+        - Dev Containers Extension installed
+        - Docker
+(more about this in the next section)
 
 <div class="grid cards" markdown>
 - [Yes! let's begin :octicons-arrow-right-24:](2-getting-started.md)
