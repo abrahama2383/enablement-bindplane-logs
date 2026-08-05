@@ -76,9 +76,13 @@ Add a filter to this view to see only our Bindplane Lab logs:
 
 ![alt text](img/5-add-field/7-filtered-in-dynatrace.png)
 
+!!! tip "Dynatrace Segments"
+    In Dynatrace, [Segments](https://docs.dynatrace.com/docs/manage/segments) allow you automatically filter the data you see across the platform, without having to explicity apply filters as you use it.
+    Optional: create a segment for logs using the filter you applied above.
+
 Perfect!  Now we can focus on exactly what we need to.  Think about how you'd use this feature with the logs you currently collect.
 
 <div class="grid cards" markdown>
-- [Add structure with OpenPipeline:octicons-arrow-right-24:](6-parsing-with-openpipeline.md)
+- [Add Structure with OpenPipeline:octicons-arrow-right-24:](6-parsing-with-openpipeline.md)
 </div>
 
