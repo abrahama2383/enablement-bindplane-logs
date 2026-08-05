@@ -13,7 +13,7 @@ Let's use a Bindplane processor to help us sort this out.
 ### 1. Open the Processors Configuration
 Beginning at you logs pipeline configuration, click on the processor configuration node for the Syslog file source.
 
-[Processor Node](img/5-add-field/1-processor-node.png)
+![Processor Node](img/5-add-field/1-processor-node.png)
 
 ### 2. View and Compare Live Logs
 Here we can see a live preview of the logs that are passing through this node.  This will allow us to test and debug parsers with live data before we apply our changes!
