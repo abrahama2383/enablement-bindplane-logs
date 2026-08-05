@@ -10,7 +10,7 @@ nav:
   - "4. Bindplane Configuration": 4-bindplane-configuration.md
   - "5. Processors: Add a Field": 5-add-field.md
   - "6. OpenPipeline": 6-openpipeline.md
-  - "7. Making Data & Routing": 7-masking-routing.md
+  - "7. Masking Data & Routing": 7-masking-routing.md
   - "8. Extracting Metrics from Logs": 8-metric-extraction.md
   - "9. Bindplane Health": 9-bindplane-health.md
 
