@@ -79,6 +79,6 @@ Add a filter to this view to see only our Bindplane Lab logs:
 Perfect!  Now we can focus on exactly what we need to.  Think about how you'd use this feature with the logs you currently collect.
 
 <div class="grid cards" markdown>
-- [Add structure with OpenPipeline:octicons-arrow-right-24:](6-openpipeline.md)
+- [Add structure with OpenPipeline:octicons-arrow-right-24:](6-parsing-with-openpipeline.md)
 </div>
 
