@@ -12,13 +12,11 @@
 
 ---
 
-Install, configure, and extend [BindPlane](https://bindplane.com/) to build a production-grade log collection pipeline — then use Dynatrace OpenPipeline to parse, enrich, mask, route, and extract metric value from the data.
-
 [![Log Pipeline Overview](docs/img/hero.png)](docs/img/hero.png)
 
 ## Lab Overview
 
-During this hands-on training, you will install and configure BindPlane to collect logs from a Linux host, shape them in-flight using processors and routers, and deliver them to Dynatrace — where OpenPipeline takes over to parse, route, and generate metrics from the stream.
+During this hands-on training, you will install and configure BindPlane to collect logs from a Linux host, shape them in-flight using processors and routers, and deliver them to Dynatrace, where OpenPipeline takes over to parse and shape them.
 
 **Lab tasks:**
 
