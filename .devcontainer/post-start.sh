@@ -6,6 +6,11 @@
 #Load the functions into the shell
 source .devcontainer/util/source_framework.sh
 
+# ensure hostname resolves (workaround for Rancher Desktop / Lima)
+if ! getent hosts "$(hostname)" > /dev/null 2>&1; then
+	echo "127.0.1.1 $(hostname)" | sudo tee -a /etc/hosts > /dev/null 2>&1
+fi
+
 startLogGenerator
 
 #TODO: BeforeGoLive comment this so the Mkdocs are not exposed in the container.
