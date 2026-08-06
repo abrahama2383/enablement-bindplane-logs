@@ -108,5 +108,5 @@ Return to the logs app in Dynatrace an click "Run Query" to retrieve the latest 
 ![Parsed Logs](img/6-parsing-with-openpipeline/5-parsed-logs.png)
 
 <div class="grid cards" markdown>
-- [Masking Sensitive Data and Routing:octicons-arrow-right-24:](6-parsing-with-openpipeline.md)
+- [Masking Sensitive Data and Routing:octicons-arrow-right-24:](7-masking-routing.md)
 </div>
