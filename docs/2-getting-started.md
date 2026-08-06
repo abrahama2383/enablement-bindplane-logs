@@ -44,7 +44,7 @@ In summary:
 
 
 ## Validate the Environment
-We'll be doing all of our work inside this Dev Container.  Take a look at the terminal tab at the bottom of of your VSCode window.  You should see some messages confirming that the environment has started up correctly.
+We'll be doing all of our work inside this Dev Container.  Take a look at the terminal tab at the bottom of your VSCode window.  You should see some messages confirming that the environment has started up correctly.
 ![Container Startup](img/2-getting-started/container_startup.png)
 
 Press any key or open a new terminal window to continue.
@@ -68,5 +68,5 @@ Your logs may look slightly different based on some environmental factors like h
 Great!  With that, your environment is set up and ready to go!
 
 <div class="grid cards" markdown>
-- [Let's install our Bindplane Agent:octicons-arrow-right-24:](3-bindplane-agent.md)
+- [Let's install our Bindplane Agent :octicons-arrow-right-24:](3-bindplane-agent.md)
 </div>

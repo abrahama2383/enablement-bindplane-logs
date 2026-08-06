@@ -4,7 +4,7 @@
 *add some text about what processors are for*
 
 
-Take a look at our Syslogs in Dynatrace.  They're mixed in with everything else that is streaming in to our Dyntrace environment.
+Take a look at our Syslogs in Dynatrace.  They're mixed in with everything else that is streaming in to our Dynatrace environment.
 
 ![alt text](img/5-add-field/1-mixed-logs.png)
 
@@ -45,7 +45,7 @@ We are going to add a field to all logs used in this lab so that they are easily
 
 ### 5. Preview Changes
 
-Now we're back to our processor node configuration.  We can see that our processer has been added.  Expand one of the logs messages on the left.  We can see what our log message would look like if passed through this node, with our new field!
+Now we're back to our processor node configuration.  We can see that our processor has been added.  Expand one of the logs messages on the left.  We can see what our log message would look like if passed through this node, with our new field!
 
 Notice as well that Bindplane has enriched our logs by adding some fields such as the `log_type` as well as some [OpenTelemetry Resource](https://opentelemetry.io/docs/concepts/resources/) attributes.
 
@@ -54,11 +54,11 @@ Notice as well that Bindplane has enriched our logs by adding some fields such a
 Click the "Save" button at the bottom.  We had previously saved our changes to the individual processor that we created.  This will save *all* changes made to this processor node (if we added or edited multiple processors, for example).
 
 ### 6. Rollout to the Agent
-We're back at our configuration and we can see that our processor node is indicating that we have one processer now.  But also notice that we're prompted to "Start Rollout" and that we are currenty viewing a draft version of our configuration.
+We're back at our configuration and we can see that our processor node is indicating that we have one processor now.  But also notice that we're prompted to "Start Rollout" and that we are currently viewing a draft version of our configuration.
 
 ![Rollout Changes](img/5-add-field/6-rollout.png)
 
-Even though we've saved our changes to the configuration itself, the final step is to roll it out to the agents that use it (in our case, the singe agent we added).
+Even though we've saved our changes to the configuration itself, the final step is to roll it out to the agents that use it (in our case, the single agent we added).
 
 Go ahead and click "Start Rollout" to push this change to the agent.
 
@@ -66,7 +66,7 @@ Go ahead and click "Start Rollout" to push this change to the agent.
     Notice the "Compare" button next to "Start Rollout".  Clicking it will show you the underlying declarative YAML that is used to construct your configuration.
 
 ### 7. Filtering in Dynatrace
-Once the rollout is complete, switch to your Dynatrace environment and cick "Run Query" again to fetch the latest logs.
+Once the rollout is complete, switch to your Dynatrace environment and click "Run Query" again to fetch the latest logs.
 
 Click on one of the Syslog logs and see the detailed view on the right side of the window.  There's our added field!  Now we can use it to filter for any logs coming from this lab.
 

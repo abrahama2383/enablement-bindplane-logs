@@ -5,7 +5,7 @@
 Here, we'll use it to parse and structure our logs, making them even easier to store, filter and query.
 
 ### 1. Understanding Syslog
-Even though we've got some great contextual information in our logs, there is more we can extract from them.  The [Syslog specification](https://datatracker.ietf.org/doc/html/rfc5424) declares additional metadata in addition to the actual log message.  But all of that context is trapped inside our `content` field as a string.  Here's what wer're missing out on:
+Even though we've got some great contextual information in our logs, there is more we can extract from them.  The [Syslog specification](https://datatracker.ietf.org/doc/html/rfc5424) declares additional metadata in addition to the actual log message.  But all of that context is trapped inside our `content` field as a string.  Here's what we're missing out on:
 
 ![Sylog Unparsed](img/6-parsing-with-openpipeline/1-syslog-unparsed.png)
 
@@ -16,7 +16,7 @@ Were going to create a pipeline that will automatically parse our Syslog-formatt
 
 In Dynatrace, navigate to your Environment Settings, or search for "OpenPipeline", then:
 
-1. Click "Process and Contexualize"
+1. Click "Process and Contextualize"
 2. Click "Logs"
 
 ![OpenPipeline Settings](img/6-parsing-with-openpipeline/2-openpipeline-setttings.png)
@@ -52,9 +52,9 @@ On the following dialog,
 
 Normally, this Processor would be ready to go as-is, but we have some special circumstances.  Luckily OpenPipeline is flexible and configurable and can accommodate our situation.
 
-Processers in OpenPipeline use a [matching condition](https://docs.dynatrace.com/docs/platform/openpipeline/reference/dql/dql-matcher-in-openpipeline) to test whether or not they should be applied to each log message that passes through the pipeline.
+Processors in OpenPipeline use a [matching condition](https://docs.dynatrace.com/docs/platform/openpipeline/reference/dql/dql-matcher-in-openpipeline) to test whether or not they should be applied to each log message that passes through the pipeline.
 
-It's a common convention to write syslog messages to `/var/log/syslog`, so the default matching condition is written as (with additional support for logs that are send via Dynatrace's syslog extension):
+It's a common convention to write syslog messages to `/var/log/syslog`, so the default matching condition is written as (with additional support for logs that are sent via Dynatrace's syslog extension):
 
 ```
 matchesValue(dt.openpipeline.source, "extension:syslog") or matchesValue(log.source, "/var/log/syslog")
@@ -76,12 +76,12 @@ matchesValue(log.file.name, "syslog")
 Finally, click "Save" to save the overall pipeline configuration.
 
 ### Create a Dynamic Route
-Our processor is all set up, but it's not actually going to do anything, because no logs are being sent through our pipeline.  OpenPipeline uses [Dynamic Routes](https://docs.dynatrace.com/docs/platform/openpipeline/get-started/how-to-routing) to faclitate this. Similarly to the Matching Conditions for a Processor, Dynamic Routes use matching conditions to route data coming into your environment to a particular pipeline.
+Our processor is all set up, but it's not actually going to do anything, because no logs are being sent through our pipeline.  OpenPipeline uses [Dynamic Routes](https://docs.dynatrace.com/docs/platform/openpipeline/get-started/how-to-routing) to facilitate this. Similarly to the Matching Conditions for a Processor, Dynamic Routes use matching conditions to route data coming into your environment to a particular pipeline.
 
-We want to send all the logs from our Dev Container to the pipeline that we just created.  Can you think of a matching condition that would acheive that?
+We want to send all the logs from our Dev Container to the pipeline that we just created.  Can you think of a matching condition that would achieve that?
 
 ??? tip "Hint"
-    Remember the Bindplane processor that we used to add a field to all of the logs in our pipeline?  That field was named `project` and its value is `binplane-logs-lab` (or whatever you chose at the time)
+    Remember the Bindplane processor that we used to add a field to all of the logs in our pipeline?  That field was named `project` and its value is `bindplane-logs-lab` (or whatever you chose at the time)
 
 Return to the OpenPipeline Logs settings page
 

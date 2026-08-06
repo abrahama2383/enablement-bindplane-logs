@@ -5,7 +5,7 @@
 Click the button "Install Agent"
 ![Install Agent](img/3-bindplane-agent/install_agent.png)
 
-### 2. Specify your agent confguration
+### 2. Specify your agent configuration
 You can use the default, stable Agent Type.
 
 You can leave "Fleet" blank.

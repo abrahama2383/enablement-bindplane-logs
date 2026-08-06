@@ -1,14 +1,14 @@
-## Maksing Data & Routing
+## Masking Data & Routing
 
 Uh oh.  You were sitting in on a meeting and you heard one of the DevOps engineers mention that they wrote a script that manages cloud infrastructure from one of the hosts in your network (your Dev Container!).  This can't be good.
 
-You know that the `auditd` system logs every command that was run on the system.  There's real possibility of a credential leak here.  Let's investigate.
+You know that the `auditd` system logs every command that was run on the system.  There's a real possibility of a credential leak here.  Let's investigate.
 
 !!! warning "Example Credentials"
     All logs in the lab, including the ones in this exercise are randomly and synthetically generated.
 
 
-Let's look through our logs for any credentials for our our vendor, **Big Cloud Hyperscaler**.
+Let's look through our logs for any credentials for our vendor, **Big Cloud Hyperscaler**.
 
 Head back to the Logs app in Dynatrace and filter for the terms "BCH" and "KEY" in our log messages.
 
@@ -56,7 +56,7 @@ Our strategy for redaction will be:
 
 ![Redaction Settings](img/7-masking-routing/2-redaction-settings.png)
 
-Success!!!  Our sensitive credentails have been replaced with hashed strings, and the rest of our log message remains intact, so we can still work with them in full detail.
+Success!!!  Our sensitive credentials have been replaced with hashed strings, and the rest of our log message remains intact, so we can still work with them in full detail.
 
 ![Redacted Credentials](img/7-masking-routing/2-redacted-credentials.png)
 
@@ -83,9 +83,9 @@ Let's create two routes - one that will match our credential-exposed logs, and t
 !!! tip "OTTL IsMatch"
     The input to the router can take any OTTL expression, but the [IsMatch](https://github.com/open-telemetry/opentelemetry-collector-contrib/blob/main/pkg/ottl/ottlfuncs/README.md#ismatch) function is a great candidate for this.
 
-Can you think of a good way to filter for only log that contain our sensitive credentials?
+Can you think of a good way to filter for only logs that contain our sensitive credentials?
 
-Let's target logs that conain the key names for our credentials:
+Let's target logs that contain the key names for our credentials:
 
 ```
 IsMatch(body, "BCH_ACCESS_KEY_ID=|BCH_SECRET_ACCESS_KEY=")

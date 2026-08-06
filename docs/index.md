@@ -19,4 +19,4 @@ _ text about what the lab is... _
 (more about this in the next section)
 
 <div class="grid cards" markdown>
-- [Yes! let's begin :octicons-arrow-right-24:](2-getting-started.md)
+- [Yes! Let's begin :octicons-arrow-right-24:](2-getting-started.md)

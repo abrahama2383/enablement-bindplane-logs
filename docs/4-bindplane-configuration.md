@@ -15,14 +15,14 @@ Use the search box to search for "file", and choose the File source.
 ![alt text](img/4-bindplane-configuration/2-find-source.png)
 
 ### 3. Configure the File source
-1. Create a descriptive name, like "Syslog File" your source
+1. Create a descriptive name, like "Syslog File" for your source
 2. Add the Syslog file path that we examined before:  `/var/log/bpsystem/syslog`
 3. Click "Next"
 
 ![alt text](img/4-bindplane-configuration/3-add-source.png)
 
 ### 4. Create a Destination
-We need to send our logs somwhere to make use of them.  Let's create a Destination that weill send our logs to Dynatrace.
+We need to send our logs somewhere to make use of them.  Let's create a Destination that will send our logs to Dynatrace.
 
 1. Click "Add Destination"
 2. Seach for "Dynatrace"
@@ -34,7 +34,7 @@ We need to send our logs somwhere to make use of them.  Let's create a Destinati
 
 1. Give this Destination a descriptive name
 2. Enter your Dynatrace [Environment Id](https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id) 
-3. Enter the token you created for that enviroment in the [Getting Started](../2-getting-started) section.
+3. Enter the token you created for that environment in the [Getting Started](../2-getting-started) section.
 
 ![alt text](img/4-bindplane-configuration/5-create-destination.png)
 
@@ -44,7 +44,7 @@ Alternatively, you can enter a custom [Dynatrace OTLP endpoint](https://docs.dyn
 
 Click "Save" and you'll be sent to the Configuration you just created.
 
-### 6.View the Configuration and Pipeline
+### 6. View the Configuration and Pipeline
 
 We've created a Bindplane Configuration that can deployed wherever we need to collect and send logs.  You can see the logs pipeline we created, but it's not doing much right now because we haven't told any agents to use it.  Scroll down and you'll see a listing of all the agents using this configuration (none yet!), and a button to "Add Agents".
 
@@ -53,7 +53,7 @@ We've created a Bindplane Configuration that can deployed wherever we need to co
 ### 7. Add the Agents to the Configuration
 
 1. Click "Add Agents"
-2. In the pop-up dialong, choose the Agent you created earlier
+2. In the pop-up dialog, choose the Agent you created earlier
 3. Click "Apply"
 
 ![alt text](img/4-bindplane-configuration/7-add-agent.png)
@@ -75,7 +75,7 @@ Now let's verify that we're seeing the logs in Dynatrace.
 
 1. Visit your Dynatrace environment and open the "Logs" app from the left-hand navigation (or search for it by using the search function in the top-left)
 2. Click the "Run Query" button to fetch the latest logs from your environment.
-3. Vew the results.  You might have a mix of logs from all places in this view since this is *everything* in your environment.  The syslogs for this lab can be identified by starting with a number enclosed in `<` and `>`, followed by a timestamp, followed by the hostname of your Dev Container (which should match the agent name we created earlier).
+3. View the results.  You might have a mix of logs from all places in this view since this is *everything* in your environment.  The syslogs for this lab can be identified by starting with a number enclosed in `<` and `>`, followed by a timestamp, followed by the hostname of your Dev Container (which should match the agent name we created earlier).
 
 Example:
 ```
