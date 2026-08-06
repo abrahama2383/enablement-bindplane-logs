@@ -26,7 +26,7 @@ fi
 
 nohup python3 .devcontainer/util/generate_logs.py \
   --logdir "$logdir" \
-  --scenario leak_aws_key \
+  --scenario leak_bch_key \
   --scenario-after 20 \
   --scenario-repeat 50 \
   --interval 0.5 \

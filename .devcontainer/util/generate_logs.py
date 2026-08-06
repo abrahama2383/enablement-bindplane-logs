@@ -298,8 +298,8 @@ def rand_token(prefix="", length=32):
     chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
     return prefix + "".join(random.choices(chars, k=length))
 
-def rand_aws_key():
-    return "AKIA" + "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", k=16))
+def rand_bch_key():
+    return "BCHK" + "".join(random.choices("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", k=16))
 
 def rand_email():
     names  = ["alice", "bob", "deploy", "ci", "admin", "noreply", "support"]
@@ -494,23 +494,23 @@ def scenario_leak_bearer_token():
     lines += seq_ssh_disconnect(user=user)
     return lines
 
-def scenario_leak_aws_key():
-    """AWS access key + secret leak via auditd — passed as env vars to a deploy script.
+def scenario_leak_bch_key():
+    """Big Cloud Hyperscaler (BCH) access key + secret leak via auditd — passed as env vars to a deploy script.
     Two secrets, two masking strategies:
-      Key ID:     value format regex  →  AKIA[A-Z0-9]{16}          (HIGH reliability)
-      Secret key: key-name prefix     →  AWS_SECRET_ACCESS_KEY=\\S+ (MEDIUM reliability)
+      Key ID:     value format regex  →  BCHK[A-Z0-9]{16}           (HIGH reliability)
+      Secret key: key-name prefix     →  BCH_SECRET_ACCESS_KEY=\\S+ (MEDIUM reliability)
     Watch: kern.log, syslog
     """
     user       = random.choice(TRUSTED_USERS)
-    aws_key    = rand_aws_key()
-    aws_secret = rand_token(length=40)
+    bch_key    = rand_bch_key()
+    bch_secret = rand_token(length=40)
     lines = _auditd_preamble(user)
     lines += [
         kern_line(SEV_INFO,
             f"type=EXECVE msg=audit({_atime()}): argc=3 "
             f"a0=\"/bin/bash\" "
             f"a1=\"/opt/deploy.sh\" "
-            f"a2=\"AWS_ACCESS_KEY_ID={aws_key} AWS_SECRET_ACCESS_KEY={aws_secret}\""),
+            f"a2=\"BCH_ACCESS_KEY_ID={bch_key} BCH_SECRET_ACCESS_KEY={bch_secret}\""),
         kern_line(SEV_INFO,
             f"type=SYSCALL msg=audit({_atime()}): arch=c000003e syscall=59 success=yes exit=0 "
             f"items=2 ppid={epid()} pid={epid()} auid=1000 uid=1000 gid=1000 euid=1000 "
@@ -584,7 +584,7 @@ SCENARIOS = {
     "recon":                (scenario_recon,                "Port scan from bad IP triggering UFW blocks",          "kern.log, syslog"),
     # --- Data masking scenarios (each teaches a distinct detection strategy) ---
     "leak_bearer_token":    (scenario_leak_bearer_token,    "API bearer token in curl header — mask by value prefix",   "kern.log, syslog"),
-    "leak_aws_key":         (scenario_leak_aws_key,         "AWS key+secret in env args — mask by format + key name",   "kern.log, syslog"),
+    "leak_bch_key":         (scenario_leak_bch_key,         "BCH (Big Cloud Hyperscaler) key+secret in env args — mask by format + key name",   "kern.log, syslog"),
     "leak_db_password":     (scenario_leak_db_password,     "DB password as CLI arg — context-only, low maskability",   "kern.log, syslog"),
     "leak_email":           (scenario_leak_email_address,   "Email addresses in postfix relay logs — mask by format",   "syslog"),
 }
