@@ -306,6 +306,20 @@ def rand_email():
     domains = ["corp.internal", "example.com", "acme.org"]
     return f"{random.choice(names)}@{random.choice(domains)}"
 
+def _init_bch_key_pairs():
+    """Generate 4 BCH key pairs at startup with a skewed weight distribution.
+    One randomly chosen pair gets 60-70% of the weight; the other three split the rest."""
+    pairs = [(rand_bch_key(), rand_token(length=40)) for _ in range(4)]
+    primary_weight = random.uniform(0.60, 0.70)
+    remaining = 1.0 - primary_weight
+    cuts = sorted(random.uniform(0, remaining) for _ in range(2))
+    other_weights = [cuts[0], cuts[1] - cuts[0], remaining - cuts[1]]
+    primary_idx = random.randint(0, 3)
+    weights = other_weights[:primary_idx] + [primary_weight] + other_weights[primary_idx:]
+    return pairs, weights
+
+BCH_KEY_PAIRS, BCH_KEY_WEIGHTS = _init_bch_key_pairs()
+
 # Normal auditd execve lines — benign commands captured by audit rules.
 # These establish the baseline so the credential leak doesn't stand out structurally.
 BENIGN_AUDIT_CMDS = [
@@ -501,9 +515,8 @@ def scenario_leak_bch_key():
       Secret key: key-name prefix     →  BCH_SECRET_ACCESS_KEY=\\S+ (MEDIUM reliability)
     Watch: kern.log, syslog
     """
-    user       = random.choice(TRUSTED_USERS)
-    bch_key    = rand_bch_key()
-    bch_secret = rand_token(length=40)
+    user = random.choice(TRUSTED_USERS)
+    bch_key, bch_secret = random.choices(BCH_KEY_PAIRS, weights=BCH_KEY_WEIGHTS, k=1)[0]
     lines = _auditd_preamble(user)
     lines += [
         kern_line(SEV_INFO,
