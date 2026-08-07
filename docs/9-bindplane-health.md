@@ -39,6 +39,10 @@ Everything is now configured in Bindplane to collect self monitoring metrics and
 
 2. Upload this dashboard to your Dynatrace environment.
 
+3. Refresh your dashboard to view your Bindplane Collector health!
+   <img width="1712" height="1199" alt="image" src="https://github.com/user-attachments/assets/136aebde-3a4b-4527-9cba-51129c366d85" />
+
+
    
 
 
