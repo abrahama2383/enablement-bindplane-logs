@@ -32,7 +32,7 @@ This is the lowest-friction way to get up and running.  You can simply launch a 
 !!! warning "Codespaces Quota"
     GitHub Codespaces are a billed resource, however GitHub provides a free monthly quota.  If you would rather not incur any charges against your quota for this lab, use option #2
 
-1. Visit this repository's page in GitHub
+1. Visit this [repository's page in GitHub](https://github.com/dynatrace-wwse/enablement-bindplane-logs)
 2. Expand the "<> Code" menu
 3. Click "Create codespace on main"
 ![Codespace Dialog](img/2-getting-started/codespace_dialog.png){: style="width: 400px;"}
