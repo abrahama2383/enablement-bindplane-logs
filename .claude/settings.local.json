@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 .devcontainer/util/generate_logs.py --count 1 --logdir /tmp/test-logs)",
+      "Bash(python3 /workspaces/enablement-bindplane-logs/.devcontainer/util/generate_logs.py --logdir /var/log/bpsystem --scenario leak_bch_key --scenario-after 20 --scenario-repeat 50 --interval 0.5 --count 1)",
+      "Bash(gh api *)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  }
+}

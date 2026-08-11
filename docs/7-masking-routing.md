@@ -125,3 +125,8 @@ Success!  Now we see hashed values instead of our sensitive credentials!
 
 ![Hashed Credentials](img/7-masking-routing/5-hashed-credentials.png)
 
+Let's assess the impact of this leak.
+
+<div class="grid cards" markdown>
+- [Extracting Metrics from Logs:octicons-arrow-right-24:](8-metric-extraction.md)
+</div>
