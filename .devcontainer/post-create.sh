@@ -5,13 +5,13 @@ source .devcontainer/util/source_framework.sh
 
 setUpTerminal
 
-startK3dCluster
+#startK3dCluster
 
-installK9s
+#installK9s
 
 #TODO: BeforeGoLive: uncomment this. This is only needed for professors to have the Mkdocs live in the container
 
-installMkdocs
+#installMkdocs
 
 
 # Dynatrace Operator can be deployed automatically
