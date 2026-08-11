@@ -1,15 +1,24 @@
+In this hands-on lab, you'll build that pipeline end to end. Using **BindPlane** as your collection and processing layer and **Dynatrace** as your observability backend, you'll collect syslog data from a Linux host, shape it in-flight, and deliver it to Dynatrace — where **OpenPipeline** takes over to parse and further enrich it.
 
+By the end of the lab, you'll know how to:
 
-## About
-
-_ text about what the lab is... _
+- Deploy and configure a BindPlane agent on a Linux host
+- Define sources, processors, and destinations in a BindPlane configuration
+- Enrich logs with custom metadata before they leave the host
+- Parse structured fields out of raw syslog content using Dynatrace OpenPipeline
+- Detect and mask sensitive credentials in-flight using regex-based redaction
+- Route logs selectively so only the right data passes through each processor
+- Convert log events into metrics and query them with DQL
+- Monitor the health of your BindPlane pipeline itself using self-monitoring
 
 ## Prerequisites
 - BindPlane account and project
 - Dynatrace tenant
 - Dynatrace token with the following permissions:
-    - `logs.ingest`
-    - `metrics.ingest`
+    - storage:logs:write
+    - openpipeline:logs:ingest
+    - storage:metrics:write
+    - openpipeline:metrics:ingest
 - One of:
     - For working entirely in a browser: access to GitHub Codespaces
     - For working locally in a [Dev Container](https://code.visualstudio.com/docs/devcontainers/tutorial):

@@ -1,10 +1,13 @@
+When your syslogs first start arriving in Dynatrace, they'll be mixed in with every other log source in your environment. To work with them effectively — filtering, routing, building dashboards — you need a reliable way to identify them.
 
-## Adding a Field using a Bindplane Processor
+That's where **processors** come in. A BindPlane processor sits between your source and destination in the pipeline and transforms log records in-flight, before they leave your host. One of the simplest and most useful processors is **Add Fields**: it stamps a static key-value attribute onto every log record passing through, so the field is always present and always consistent.
 
-*add some text about what processors are for*
+BindPlane's live log preview makes this easy to reason about. Before you commit any changes, you can see exactly what a log record looks like *before* and *after* your processor is applied — using actual live data from your agent. Once you're happy with what you see, a rollout pushes the updated configuration to the agent seamlessly.
+
+In this section, you'll add a `project: bindplane-logs-lab` attribute to every log in your pipeline. This field will follow your logs into Dynatrace and become the key you use throughout the rest of the lab — for filtering, routing in OpenPipeline, and building queries.
 
 
-Take a look at our Syslogs in Dynatrace.  They're mixed in with everything else that is streaming in to our Dynatrace environment.
+See our Syslogs in Dynatrace.  They're mixed in with everything else that is streaming in to our Dynatrace environment.
 
 ![alt text](img/5-add-field/1-mixed-logs.png)
 

@@ -7,6 +7,10 @@ You know that the `auditd` system logs every command that was run on the system.
 !!! warning "Example Credentials"
     All logs in the lab, including the ones in this exercise are randomly and synthetically generated.
 
+This is a realistic and common scenario. Infrastructure automation scripts frequently use environment variables or command-line arguments that get captured by `auditd` or similar system loggers. The credentials themselves are synthetically generated for this lab, but the pattern is real.
+
+The right fix is to prevent the sensitive data from ever leaving your infrastructure. BindPlane's **Redact Sensitive Data** processor lets you define regex patterns that match sensitive values and replace them — in this case using a **hashing** strategy. Hashing is preferable to blank redaction here because it preserves uniqueness: if the same credential appears in multiple log records, they'll all produce the same hash, which means you can still assess the scope of the leak without ever exposing the raw value.
+
 
 Let's look through our logs for any credentials for our vendor, **Big Cloud Hyperscaler**.
 

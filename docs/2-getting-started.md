@@ -1,3 +1,10 @@
+Before you can start building your log pipeline, you need three things in place: a BindPlane account to manage your pipeline configuration, a Dynatrace tenant to receive the data, and a development environment to run the lab in.
+
+**BindPlane** is a telemetry pipeline management platform built on OpenTelemetry. You'll use it to install and remotely configure the agent that runs on your lab host. If you don't already have an account, you can sign up for free at [bindplane.com](https://bindplane.com/).
+
+**Dynatrace** is where your logs and metrics will ultimately land. The lab needs a platform token scoped ingesting logs and metrics (detailed below) — just enough access to push telemetry in. Everything else in Dynatrace (querying, dashboards, notebooks) works with your existing permissions.
+
+The **development environment** is a pre-configured Linux host packaged as a [Dev Container](https://containers.dev/). You can run it entirely in your browser via GitHub Codespaces, or locally in VSCode with Docker.
 
 ## 1. Bindplane
 
@@ -7,8 +14,10 @@ Begin by creating a [Bindplane](https://bindplane.com/) account, then create a p
 
 In your Dynatrace tenant, [create a platform token](https://docs.dynatrace.com/docs/manage/identity-access-management/access-tokens-and-oauth-clients/platform-tokens) that has the following permissions:
 
-- `logs.ingest`
-- `metrics.ingest`
+- storage:logs:write
+- openpipeline:logs:ingest
+- storage:metrics:write
+- openpipeline:metrics:ingest
 
 Save the token for now; you won't be able to see it again once you leave the token creation dialog.
 

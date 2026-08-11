@@ -1,8 +1,11 @@
-## Parsing with OpenPipeline
+Your syslog records are now flowing into Dynatrace, but they arrive as a single flat string in the `content` field. All the rich metadata that the [Syslog RFC 5424](https://datatracker.ietf.org/doc/html/rfc5424) defines — priority, facility, severity, process ID, app name, structured data — is trapped inside that string, invisible to queries and filters. Every log also shows a status of `NONE` because there's no parsed severity level.
 
-[OpenPipeline](https://docs.dynatrace.com/docs/platform/openpipeline) is Dynatrace's solution for ingesting, transforming, and routing observability data from any source, at any scale, directly within the Platform.
+[OpenPipeline](https://docs.dynatrace.com/docs/platform/openpipeline)  is Dynatrace's server-side data processing engine. It receives your logs at ingest and applies a sequence of processors before storing them, so you can reshape data without touching the source or the collection agent. For common log formats like syslog, OpenPipeline includes **Technology Bundles**: pre-configured processor rules that already know how to parse the format and map fields to Dynatrace's Semantic Dictionary.
 
-Here, we'll use it to parse and structure our logs, making them even easier to store, filter and query.
+You'll connect your logs to the Syslog Technology Bundle via a **Dynamic Route** — a DQL-based matching condition that tells OpenPipeline which pipeline to send specific records through. The `project` field you added in the previous section is exactly what you'll use as that routing key: logs tagged `bindplane-logs-lab` go through your new pipeline, everything else is unaffected.
+
+After this section, your syslog records will have properly structured fields, correct severity levels, and far more queryable context — all from a single processor, with no changes to the agent or the host.
+
 
 ### 1. Understanding Syslog
 Even though we've got some great contextual information in our logs, there is more we can extract from them.  The [Syslog specification](https://datatracker.ietf.org/doc/html/rfc5424) declares additional metadata in addition to the actual log message.  But all of that context is trapped inside our `content` field as a string.  Here's what we're missing out on:

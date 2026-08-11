@@ -1,5 +1,6 @@
+The **BindPlane Agent** is the component that runs on a host and collects telemetry. Its BindPlane's distribution of the OpenTelemetry Collector — purpose-built for managed deployment, meaning BindPlane can push configuration changes to it remotely via the OpAmp protocol, without you ever touching the host directly.
 
-## Let's get started on installing our Bindplane Agent
+Once the agent is running and visible in the BindPlane UI, you're ready to tell it what to collect and where to send it.
 
 ### 1. Navigate to your Bindplane account
 Click the button "Install Agent"
@@ -30,7 +31,7 @@ You may see some messages instructing you to use `systemctl` to start the Bindpl
 ```
 
 !!! warning "Bindplane Startup"
-    Don't use the `systemctl` command to start Bindplane as the installation script mentions.  Instead, use the `startBindplane` command.
+    Don't use the `systemctl` command to start Bindplane as the installation script mentions.  Instead, use the `startBindplane` command available in your terminal.
 
 Once you've run that command, you should see your agent show up in the Bindplane UI.  It will be named after the host it is installed on.  If you are using a Codespace, it will be your Codespace name.  If you are using a local Dev Container, it will take the name of your Docker implementation.
 

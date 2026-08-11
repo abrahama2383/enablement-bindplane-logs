@@ -1,7 +1,11 @@
+A BindPlane **Configuration** is a reusable, version-controlled definition of a telemetry pipeline. It describes three things: where data comes from (**Sources**), how it's transformed in-flight (**Processors**), and where it's sent (**Destinations**). Once a configuration is created, it can be deployed to one or many agents with a single rollout — and rolled back just as easily if something goes wrong.
 
-## Creating a configuration
+In this section, you'll build your first configuration:
 
-*About configurations, sources, destinations, goes here*
+- **Source:** a File source pointed at `/var/log/bpsystem/syslog`, using BindPlane's built-in filelog receiver to tail the syslog file your Dev Container is actively writing to
+- **Destination:** the Dynatrace destination, which sends logs over OTLP/HTTP directly to your Dynatrace environment using your environment ID and platform token
+
+Once you assign your agent to the configuration and roll it out, you'll be able to see log throughput in the BindPlane pipeline overview and verify that raw syslog records are appearing in Dynatrace's Logs app. They'll be unstructured at this point — a flat string of text — but they're flowing, and that's the foundation everything else builds on.
 
 ### 1. Create the configuration
 Choose a descriptive name for your configuration, choose **Linux** for the platform, and click "next"
