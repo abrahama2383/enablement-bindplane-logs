@@ -1,18 +1,18 @@
-In this hands-on lab, you're going to build a Telemetry Pipeline end-to-und. Using **BindPlane** as your collection and processing layer and **Dynatrace** as your observability backend, you'll collect syslog data from a Linux host, shape it in-flight, and deliver it to Dynatrace — where **OpenPipeline** takes over to parse and further enrich it.
+In this hands-on lab, you're going to build a Telemetry Pipeline end-to-end. Using **Bindplane** as your collection and processing layer and **Dynatrace** as your observability backend, you'll collect syslog data from a Linux host, shape it in-flight, and deliver it to Dynatrace — where **OpenPipeline** takes over to parse and further enrich it.
 
 By the end of the lab, you'll know how to:
 
-- Deploy and configure a BindPlane agent on a Linux host
-- Define sources, processors, and destinations in a BindPlane configuration
+- Deploy and configure a Bindplane agent on a Linux host
+- Define sources, processors, and destinations in a Bindplane configuration
 - Enrich logs with custom metadata before they leave the host
 - Parse structured fields out of raw syslog content using Dynatrace OpenPipeline
 - Detect and mask sensitive credentials in-flight using regex-based redaction
 - Route logs selectively so only the right data passes through each processor
 - Convert log events into metrics and query them with DQL
-- Monitor the health of your BindPlane pipeline itself using self-monitoring
+- Monitor the health of your Bindplane pipeline itself using self-monitoring
 
 ## Prerequisites
-- BindPlane account and project
+- Bindplane account and project
 - Dynatrace tenant
 - Dynatrace token with the following permissions:
     - storage:logs:write
