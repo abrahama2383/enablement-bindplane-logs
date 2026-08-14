@@ -1,4 +1,4 @@
-The **Bindplane Agent** is the component that runs on a host and collects telemetry. Its Bindplane's distribution of the OpenTelemetry Collector — purpose-built for managed deployment, meaning Bindplane can push configuration changes to it remotely via the OpAmp protocol, without you ever touching the host directly.
+The **Bindplane Agent** is the component that runs on a host and collects telemetry. Its Bindplane's distribution of the OpenTelemetry Collector which is purpose-built for managed deployment. This means Bindplane can push configuration changes to it remotely via the OpAmp protocol, without you ever touching the host directly.
 
 Once the agent is running and visible in the Bindplane UI, you're ready to tell it what to collect and where to send it.
 

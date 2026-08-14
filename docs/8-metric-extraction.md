@@ -1,10 +1,10 @@
 The credential leak is contained, but leadership wants an impact assessment: how many distinct credentials were exposed, and how often did each one appear in the logs?
 
-You already have everything you need to answer that — it's all in your log data. But repeatedly querying logs to answer a time-based question ("how many per hour over the last week?") is expensive and slow. The right tool for this is a **metric**.
+You already have everything you need to answer that, but repeatedly querying logs to answer a time-based question ("how many per hour over the last week?") is expensive and slow. The right tool for this is a **metric**.
 
 Bindplane's **Signal to Metric** connector lets you derive a proper time-series metric directly from your log pipeline. For each log record that matches your credential pattern, it emits a counter increment labeled with the specific credential key that was exposed. Those metric data points flow through your pipeline's **Metrics Pipeline** and land in Dynatrace just like any other metric, ready for `timeseries` queries, charts, and alerting.
 
-Because the redaction processor runs before the metric extraction in this pipeline, you'll be parsing the *hashed* credential value — not the original. That means your metric dimensions are safe to store, but still individually identifiable: you can hash your known credentials offline and compare the hashes to see exactly which ones were leaked.
+Because the redaction processor runs before the metric extraction in this pipeline, you'll be parsing the *hashed* credential value, not the original. That means your metric dimensions are safe to store, but still individually identifiable: you can hash your known credentials offline and compare the hashes to see exactly which ones were leaked.
 
 ### 1. Parse the Credential Key
 

@@ -2,7 +2,7 @@ Before you can start building your log pipeline, you need three things in place:
 
 **Bindplane** is a telemetry pipeline management platform built on OpenTelemetry. You'll use it to install and remotely configure the agent that runs on your lab host. If you don't already have an account, you can sign up for free at [bindplane.com](https://bindplane.com/).
 
-**Dynatrace** is where your logs and metrics will ultimately land. The lab needs a platform token scoped ingesting logs and metrics (detailed below) — just enough access to push telemetry in. Everything else in Dynatrace (querying, dashboards, notebooks) works with your existing permissions.
+**Dynatrace** is where your logs and metrics will ultimately land. The lab needs a platform token scoped ingesting logs and metrics (detailed below). Everything else in Dynatrace (querying, dashboards, notebooks) works with your existing permissions.
 
 The **development environment** is a pre-configured Linux host packaged as a [Dev Container](https://containers.dev/). You can run it entirely in your browser via GitHub Codespaces, or locally in VSCode with Docker.
 

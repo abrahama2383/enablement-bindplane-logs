@@ -1,4 +1,4 @@
-In this hands-on lab, you're going to build a Telemetry Pipeline end-to-end. Using **Bindplane** as your collection and processing layer and **Dynatrace** as your observability backend, you'll collect syslog data from a Linux host, shape it in-flight, and deliver it to Dynatrace — where **OpenPipeline** takes over to parse and further enrich it.
+In this hands-on lab, you're going to build a Telemetry Pipeline end-to-end. Using **Bindplane** as your collection and processing layer and **Dynatrace** as your observability backend, you'll collect syslog data from a Linux host, shape it in-flight, and deliver it to Dynatrace, where **OpenPipeline** takes over to parse and further enrich it.
 
 By the end of the lab, you'll know how to:
 
