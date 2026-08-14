@@ -36,6 +36,8 @@ We need to send our logs somewhere to make use of them.  Let's create a Destinat
 
 ### 5. Configure the Destination
 
+Have a look at the documentation for Dyntrace's [OTel API](https://docs.dynatrace.com/docs/ingest-from/opentelemetry/otlp-api#base-url) to understand how to structure your endpoint URL.
+
 1. Give this Destination a descriptive name
 2. Enter your Dynatrace [Environment Id](https://docs.dynatrace.com/docs/shortlink/monitoring-environment#environment-id) 
 3. Enter the token you created for that environment in the [Getting Started](../2-getting-started) section.
