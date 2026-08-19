@@ -12,7 +12,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../3-codespaces/">
+        <link rel="next" href="../3-bindplane-agent/">
       
       
       <link rel="icon" href="../assets/images/favicon.png">
@@ -20,7 +20,7 @@
     
     
       
-        <title>2. Getting started - Dynatrace Enablement Lab: Codespaces template</title>
+        <title>2. Getting started - Log Pipelines with Bindplane</title>
       
     
     
@@ -81,7 +81,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#1-prerequisites-before-launching-the-codespace" class="md-skip">
+        <a href="#1-bindplane" class="md-skip">
           Skip to content
         </a>
       
@@ -97,7 +97,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="Dynatrace Enablement Lab: Codespaces template" class="md-header__button md-logo" aria-label="Dynatrace Enablement Lab: Codespaces template" data-md-component="logo">
+    <a href=".." title="Log Pipelines with Bindplane" class="md-header__button md-logo" aria-label="Log Pipelines with Bindplane" data-md-component="logo">
       
   <img src="https://cdn.bfldr.com/B686QPH3/at/w5hnjzb32k5wcrcxnwcx4ckg/Dynatrace_signet_RGB_HTML.svg?auto=webp&format=pngg" alt="logo">
 
@@ -110,7 +110,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            Dynatrace Enablement Lab: Codespaces template
+            Log Pipelines with Bindplane
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -200,7 +200,7 @@
     
     
       <div class="md-header__source">
-        <a href="https://github.com/dynatrace-wwse/enablement-codespaces-template" title="Go to repository" class="md-source" data-md-component="source">
+        <a href="https://github.com/dynatrace-wwse/enablement-bindplane-logs" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
@@ -236,16 +236,16 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="Dynatrace Enablement Lab: Codespaces template" class="md-nav__button md-logo" aria-label="Dynatrace Enablement Lab: Codespaces template" data-md-component="logo">
+    <a href=".." title="Log Pipelines with Bindplane" class="md-nav__button md-logo" aria-label="Log Pipelines with Bindplane" data-md-component="logo">
       
   <img src="https://cdn.bfldr.com/B686QPH3/at/w5hnjzb32k5wcrcxnwcx4ckg/Dynatrace_signet_RGB_HTML.svg?auto=webp&format=pngg" alt="logo">
 
     </a>
-    Dynatrace Enablement Lab: Codespaces template
+    Log Pipelines with Bindplane
   </label>
   
     <div class="md-nav__source">
-      <a href="https://github.com/dynatrace-wwse/enablement-codespaces-template" title="Go to repository" class="md-source" data-md-component="source">
+      <a href="https://github.com/dynatrace-wwse/enablement-bindplane-logs" title="Go to repository" class="md-source" data-md-component="source">
   <div class="md-source__icon md-icon">
     
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
@@ -327,28 +327,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-prerequisites-before-launching-the-codespace" class="md-nav__link">
+  <a href="#1-bindplane" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Prerequisites before launching the Codespace
+      1. Bindplane
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. Prerequisites before launching the Codespace">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-dynatrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Dynatrace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-development-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Development Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Development Environment">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#11-download-visual-studio-code" class="md-nav__link">
+  <a href="#a-github-codespace" class="md-nav__link">
     <span class="md-ellipsis">
-      1.1 Download Visual Studio Code
+      A. GitHub Codespace
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#12-install-the-todo-tree-vs-code-extension" class="md-nav__link">
+  <a href="#b-local-dev-container" class="md-nav__link">
     <span class="md-ellipsis">
-      1.2 Install the TODO Tree VS Code extension.
+      B. Local Dev Container
     </span>
   </a>
   
@@ -356,6 +374,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validate-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validate the Environment
+    </span>
+  </a>
   
 </li>
       
@@ -374,11 +401,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../3-codespaces/" class="md-nav__link">
+      <a href="../3-bindplane-agent/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    3. Codespaces
+    3. Installing the Bindplane Agent
   </span>
   
 
@@ -394,11 +421,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../4-content/" class="md-nav__link">
+      <a href="../4-bindplane-configuration/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    4. Content
+    4. Bindplane Configuration
   </span>
   
 
@@ -414,11 +441,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../cleanup/" class="md-nav__link">
+      <a href="../5-add-field/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    5. Cleanup
+    5. Processors: Add a Field
   </span>
   
 
@@ -434,11 +461,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../resources/" class="md-nav__link">
+      <a href="../6-parsing-with-openpipeline/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    6. Resources
+    6. Parsing with OpenPipeline
   </span>
   
 
@@ -454,11 +481,51 @@
   
   
     <li class="md-nav__item">
-      <a href="../whats-next/" class="md-nav__link">
+      <a href="../7-masking-routing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    7. What's next?
+    7. Masking Data & Routing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8-metric-extraction/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    8. Extracting Metrics from Logs
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../9-bindplane-health/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    9. Bindplane Health
   </span>
   
 
@@ -492,28 +559,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#1-prerequisites-before-launching-the-codespace" class="md-nav__link">
+  <a href="#1-bindplane" class="md-nav__link">
     <span class="md-ellipsis">
-      1. Prerequisites before launching the Codespace
+      1. Bindplane
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. Prerequisites before launching the Codespace">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-dynatrace" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Dynatrace
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-development-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Development Environment
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Development Environment">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#11-download-visual-studio-code" class="md-nav__link">
+  <a href="#a-github-codespace" class="md-nav__link">
     <span class="md-ellipsis">
-      1.1 Download Visual Studio Code
+      A. GitHub Codespace
     </span>
   </a>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#12-install-the-todo-tree-vs-code-extension" class="md-nav__link">
+  <a href="#b-local-dev-container" class="md-nav__link">
     <span class="md-ellipsis">
-      1.2 Install the TODO Tree VS Code extension.
+      B. Local Dev Container
     </span>
   </a>
   
@@ -521,6 +606,15 @@
         
       </ul>
     </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#validate-the-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      Validate the Environment
+    </span>
+  </a>
   
 </li>
       
@@ -544,38 +638,67 @@
 
   <h1>2. Getting started</h1>
 
-<div class="admonition info">
-<p class="admonition-title">Requirements</p>
+<p>Before you can start building your log pipeline, you need three things in place: a Bindplane account to manage your pipeline configuration, a Dynatrace tenant to receive the data, and a development environment to run the lab in.</p>
+<p><strong>Bindplane</strong> is a telemetry pipeline management platform built on OpenTelemetry. You'll use it to install and remotely configure the agent that runs on your lab host. If you don't already have an account, you can sign up for free at <a href="https://bindplane.com/">bindplane.com</a>.</p>
+<p><strong>Dynatrace</strong> is where your logs and metrics will ultimately land. The lab needs a platform token scoped ingesting logs and metrics (detailed below). Everything else in Dynatrace (querying, dashboards, notebooks) works with your existing permissions.</p>
+<p>The <strong>development environment</strong> is a pre-configured Linux host packaged as a <a href="https://containers.dev/">Dev Container</a>. You can run it entirely in your browser via GitHub Codespaces, or locally in VSCode with Docker.</p>
+<h2 id="1-bindplane">1. Bindplane<a class="headerlink" href="#1-bindplane" title="Permanent link">#</a></h2>
+<p>Begin by creating a <a href="https://bindplane.com/">Bindplane</a> account, then create a project to work in.</p>
+<h2 id="2-dynatrace">2. Dynatrace<a class="headerlink" href="#2-dynatrace" title="Permanent link">#</a></h2>
+<p>In your Dynatrace tenant, <a href="https://docs.dynatrace.com/docs/manage/identity-access-management/access-tokens-and-oauth-clients/platform-tokens">create a platform token</a> that has the following permissions:</p>
 <ul>
-<li>A <strong>Grail enabled Dynatrace SaaS Tenant</strong> (<a href="https://dt-url.net/trial" target="_blank">sign up here</a>).</li>
-<li>A <strong>GitHub account</strong> to interact with the demo repository.</li>
+<li>storage:logs:write</li>
+<li>openpipeline:logs:ingest</li>
+<li>storage:metrics:write</li>
+<li>openpipeline:metrics:ingest</li>
 </ul>
+<p>Save the token for now; you won't be able to see it again once you leave the token creation dialog.</p>
+<h2 id="3-development-environment">3. Development Environment<a class="headerlink" href="#3-development-environment" title="Permanent link">#</a></h2>
+<p>The lab work will be done inside a <a href="https://containers.dev/">Dev Container</a> - a fully configured development environment that is bootstrapped with all of the dependencies required for the lab.</p>
+<p>You have two options to work with the Dev Container:</p>
+<h3 id="a-github-codespace">A. GitHub Codespace<a class="headerlink" href="#a-github-codespace" title="Permanent link">#</a></h3>
+<p>This is the lowest-friction way to get up and running.  You can simply launch a browser-based session of VSCode without having to install anything locally</p>
+<div class="admonition warning">
+<p class="admonition-title">Codespaces Quota</p>
+<p>GitHub Codespaces are a billed resource, however GitHub provides a free monthly quota.  If you would rather not incur any charges against your quota for this lab, use option #2</p>
 </div>
-<h2 id="1-prerequisites-before-launching-the-codespace">1. Prerequisites before launching the Codespace<a class="headerlink" href="#1-prerequisites-before-launching-the-codespace" title="Permanent link">#</a></h2>
-<p>TODO: Place the prerequisites and everything that is needed before launching the codespace. </p>
-<p>As a Professor we highly recommend to install VSCode locally and always open the devcontainer from it, specially since we'll be using some plugins for enhancing the productivity and your experience while building trainings. </p>
-<h3 id="11-download-visual-studio-code">1.1 Download Visual Studio Code<a class="headerlink" href="#11-download-visual-studio-code" title="Permanent link">#</a></h3>
-<ul>
-<li>Go to  <a href="https://code.visualstudio.com">https://code.visualstudio.com</a>, download and install Visual Studio on your machine. </li>
-</ul>
-<div class="admonition tip">
-<p class="admonition-title">Tipp</p>
-<p>Working on a local Visual Studio Code, maximizes your productivity, you'll be able to connect to dev.containers remotely, locally, install plugins, and much more.</p>
-</div>
-<h3 id="12-install-the-todo-tree-vs-code-extension">1.2 Install the TODO Tree VS Code extension.<a class="headerlink" href="#12-install-the-todo-tree-vs-code-extension" title="Permanent link">#</a></h3>
-<p>We'll be guiding you with TODOs to write your first hands-on trainig.
-- Click on the extensions tab
-- Search for "Todo tree"
-- Click on it and install it</p>
-<p><img alt="todo" src="../img/todo.png" style="width: 400px;" /></p>
-<p>Once installed, you'll see on the left menu bar, the Tree icon. When you click on it, a pane with TODO task will open, this tasks will guide you to write your training, remove each of them and the code or text that needs to be replace once completed. Like this page 😉. </p>
-<div class="admonition tip">
-<p class="admonition-title">Let's launch the Codespace</p>
-<p>Now we are ready to launch the Codespace! </p>
-</div>
+<ol>
+<li>Visit this <a href="https://github.com/dynatrace-wwse/enablement-bindplane-logs">repository's page in GitHub</a></li>
+<li>Expand the "&lt;&gt; Code" menu</li>
+<li>Click "Create codespace on main"
+<img alt="Codespace Dialog" src="../img/2-getting-started/codespace_dialog.png" style="width: 400px;" /></li>
+</ol>
+<h3 id="b-local-dev-container">B. Local Dev Container<a class="headerlink" href="#b-local-dev-container" title="Permanent link">#</a></h3>
+<p>Working with a local Dev Container involves an integration with your IDE. Visual Studio Code (VSCode) is well-suited for this
+This overall process is described in the <a href="https://code.visualstudio.com/docs/devcontainers/containers">Visual Studio Code documentation</a>.</p>
+<p>In summary:</p>
+<ol>
+<li>Install Docker.</li>
+<li>Install VSCode.</li>
+<li>Install the official Dev Containers extension.
+<img alt="Dev Containers Extension" src="../img/2-getting-started/vscode_extension.png" /></li>
+<li>Clone this repo and open it up in VSCode</li>
+<li>Use the VSCode <a href="https://code.visualstudio.com/docs/editing/userinterface#_command-palette">Command Palette</a> to Select "Dev Containers: Reopen in Container"
+<img alt="Reopen in Container" src="../img/2-getting-started/reopen_in_container.png" /></li>
+</ol>
+<h2 id="validate-the-environment">Validate the Environment<a class="headerlink" href="#validate-the-environment" title="Permanent link">#</a></h2>
+<p>We'll be doing all of our work inside this Dev Container.  Take a look at the terminal tab at the bottom of your VSCode window.  You should see some messages confirming that the environment has started up correctly.
+<img alt="Container Startup" src="../img/2-getting-started/container_startup.png" /></p>
+<p>Press any key or open a new terminal window to continue.</p>
+<p>This host writes its logs to files in <code>/var/log/bpsystem</code>.  Navigate to that directory and view the contents</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>&gt; cd /var/log/bpsystem
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>&gt; ls
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>auth.log  cron.log  kern.log  syslog
+</span></code></pre></div>
+<p>Let's take a look at the logs being written to syslog by tailing the syslog file
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>&gt; tail -f syslog
+</span></code></pre></div>
+<img alt="Syslog" src="../img/2-getting-started/syslog.gif" /></p>
+<p>Your logs may look slightly different based on some environmental factors like hostname or docker implementation.</p>
+<p>Great!  With that, your environment is set up and ready to go!</p>
 <div class="grid cards">
 <ul>
-<li><a href="../3-codespaces/">Let's launch Codespaces<span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
+<li><a href="../3-bindplane-agent/">Let's install our Bindplane Agent <span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.22 19.03a.75.75 0 0 1 0-1.06L18.19 13H3.75a.75.75 0 0 1 0-1.5h14.44l-4.97-4.97a.749.749 0 0 1 .326-1.275.75.75 0 0 1 .734.215l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0"/></svg></span></a></li>
 </ul>
 </div>
 
@@ -632,13 +755,13 @@
         
         
           
-          <a href="../3-codespaces/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Codespaces">
+          <a href="../3-bindplane-agent/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Installing the Bindplane Agent">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                3. Codespaces
+                3. Installing the Bindplane Agent
               </div>
             </div>
             <div class="md-footer__button md-icon">
