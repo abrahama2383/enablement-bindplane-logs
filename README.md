@@ -8,7 +8,7 @@
 [![Version](https://img.shields.io/github/v/release/dynatrace-wwse/enablement-bindplane-logs?color=blueviolet)](https://github.com/dynatrace-wwse/enablement-bindplane-logs/releases)
 [![Commits](https://img.shields.io/github/commits-since/dynatrace-wwse/enablement-bindplane-logs/latest?color=ff69b4&include_prereleases)](https://github.com/dynatrace-wwse/enablement-bindplane-logs/graphs/commit-activity)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg?color=green)](https://github.com/dynatrace-wwse/enablement-bindplane-logs/blob/main/LICENSE)
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-green)](https://dynatrace-wwse.github.io/enablement-bindplane-logs/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live-green)](https://abrahama2383.github.io/enablement-bindplane-logs/)
 
 ---
 
@@ -61,4 +61,6 @@ Ready to build a log pipeline?
 
 ## 🚀 Open the lab
 
-[https://dynatrace-wwse.github.io/enablement-bindplane-logs](https://dynatrace-wwse.github.io/enablement-bindplane-logs)
+**▶️ Training site (this fork):** [https://abrahama2383.github.io/enablement-bindplane-logs/](https://abrahama2383.github.io/enablement-bindplane-logs/)
+
+_Upstream original:_ [dynatrace-wwse.github.io/enablement-bindplane-logs](https://dynatrace-wwse.github.io/enablement-bindplane-logs)
